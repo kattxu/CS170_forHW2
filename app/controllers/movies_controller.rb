@@ -7,13 +7,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @movies = Movie.order params[:title]
+    @movies = Movie.order params[:release_date]
+    redirect to movies_path
   end
 
   def new
     # default: render 'new' template
   end
-
+  
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
@@ -38,8 +40,8 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-      def movie_params
+  def movie_params
         params.require(:movie).permit(:title, :rating, :description, :release_date, :timestamps)
-    end
+  end
 
 end
