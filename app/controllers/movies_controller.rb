@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @movies = Movie.all
     @movies = Movie.order params[:title]
     @movies = Movie.order params[:release_date]
     redirect to movies_path
