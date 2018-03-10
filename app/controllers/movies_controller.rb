@@ -6,11 +6,14 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
 
-  def index
+  def index #3.9.18 hw2 1.b
     @movies = Movie.all
-    @movies = Movie.order params[:title]
-    @movies = Movie.order params[:release_date]
-    redirect to movies_path
+    if params[:sorting] == 'title'
+      @movies.order(params[:sorting])
+    end
+    if params[:sorting] == 'release_date'
+      @movies.order(params[:sorting])
+    end
   end
 
   def new
@@ -44,5 +47,14 @@ class MoviesController < ApplicationController
   def movie_params
         params.require(:movie).permit(:title, :rating, :description, :release_date, :timestamps)
   end
+  
+  def highlighting(asp) #this helper method could not be utilized properly
+    if(params[:sorting] == asp)
+      return 'hilite'
+    else
+      return nil
+    end
+  end
+    
 
 end
